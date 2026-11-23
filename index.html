@@ -106,10 +106,10 @@
    };
    //Decimal places to show for each pressure unit
    var mbarDecimals = {
-     mmgh: 1,
+     mmhg: 1,
      mbar: 1,
      psia: 3
-   }
+   };
    //Convert any pressure box to all the others
    function fromPressure(unit) {
      var text = document.getElementById(unit).value;
@@ -119,7 +119,7 @@
            document.getElementById(other).value = "";
          } else {
            var mbar = parseFloat(text) *mbarPer[unit];
-           document.getElementById(other).value = clean(mbar / mbarPer[other], mbarDecimals[ohter]);
+           document.getElementById(other).value = clean(mbar / mbarPer[other], mbarDecimals[other]);
          }
        }
      }
