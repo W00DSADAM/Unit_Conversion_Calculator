@@ -104,6 +104,12 @@
      mbar: 1,
      psia: 68.94757293
    };
+   //Decimal places to show for each pressure unit
+   var mbarDecimals = {
+     mmgh: 1,
+     mbar: 1,
+     psia: 3
+   }
    //Convert any pressure box to all the others
    function fromPressure(unit) {
      var text = document.getElementById(unit).value;
@@ -113,14 +119,14 @@
            document.getElementById(other).value = "";
          } else {
            var mbar = parseFloat(text) *mbarPer[unit];
-           document.getElementById(other).value = clean(mbar / mbarPer[other]);
+           document.getElementById(other).value = clean(mbar / mbarPer[other], mbarDecimals[ohter]);
          }
        }
      }
    }   
-   // Clean up tiny computer math errors (keeps up to 6 decimals)
-   function clean(n) {
-     return parseFloat(n.toFixed(6));
+   // Round to a set number of decimal places
+   function clean(n, places) {
+     return parseFloat(n.toFixed(places));
    }
   // kW/m2 to W/m2
   function fromKw() {
@@ -128,7 +134,7 @@
      if (text == "") {
       document.getElementById("w").value = "";
      } else {
-       document.getElementById("w").value = clean(parseFloat(text) * 1000);
+       document.getElementById("w").value = clean(parseFloat(text) * 1000, 0);
      }
   }
 
@@ -138,7 +144,7 @@
     if (text == "") {
       document.getElementById("kw").value = "";
     } else {
-        document.getElementById("kw").value = clean(parseFloat(text) / 1000);
+        document.getElementById("kw").value = clean(parseFloat(text) / 1000, 2);
     }
   }
    // cc/min to LPM
@@ -147,7 +153,7 @@
    if (text == "") {
      document.getElementById("lpm").value = "";
    } else {
-     document.getElementById("lpm").value = clean(parseFloat(text) / 1000);
+     document.getElementById("lpm").value = clean(parseFloat(text) / 1000, 3);
    }
   }
   //LPM to cc/min
@@ -156,7 +162,7 @@
      if (text == "") {
        document.getElementById("cc").value = ""; 
      } else {
-       document.getElementById("cc").value = clean(parseFloat(text) * 1000);
+       document.getElementById("cc").value = clean(parseFloat(text) * 1000, 0);
      }
    }
    // How many m/s are in 1 of each unit
@@ -175,7 +181,7 @@
            document.getElementById(other).value = "";
          } else {
            var ms = parseFloat(text) * msPer[unit];
-           document.getElementById(other).value = clean(ms / msPer[other]);
+           document.getElementById(other).value = clean(ms / msPer[other], 1);
          }
        }
      }
@@ -186,7 +192,7 @@
      if (text == "") {
        document.getElementById("degf").value = "";
      } else {
-       document.getElementById("degf").value = clean(parseFloat(text) * 9 / 5 + 32);
+       document.getElementById("degf").value = clean(parseFloat(text) * 9 / 5 + 32, 1);
      }  
    }
    // °F to °C
@@ -195,7 +201,7 @@
      if (text == "") {
        document.getElementById("degc").value = "";
      } else {
-       document.getElementById("degc").value = clean((parseFloat(text) - 32) * 5 / 9);
+       document.getElementById("degc").value = clean((parseFloat(text) - 32) * 5 / 9, 1);
      }
    }
    // The 16 compass points, starting at north and going clockwise
@@ -242,7 +248,7 @@
      } else {
        var tK = parseFloat(t) + 273.15;
        var slpm = parseFloat(q) * (parseFloat(p) / STD_P) * (STD_T / tK);
-       document.getElementById("slpm").value = clean(slpm);
+       document.getElementById("slpm").value = clean(slpm, 2);
      }
    }
 
@@ -257,7 +263,7 @@
      } else {
        var tK = parseFloat(t) + 273.15;
        var alpm = parseFloat(q) * (STD_P / parseFloat(p)) * (tK / STD_T);
-       document.getElementById("alpm").value = clean(alpm);
+       document.getElementById("alpm").value = clean(alpm, 2);
      }
    }       
 </script>
