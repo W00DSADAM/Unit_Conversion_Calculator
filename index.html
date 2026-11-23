@@ -14,7 +14,7 @@
  <script>
    // Clean up tiny computer math errors (keeps up to 6 decimals)
    function clean(n) {
-     return parseFlost(n.toFixed(6));
+     return parseFloat(n.toFixed(6));
    }
   // kW/m2 to W/m2
   function fromKw() {
@@ -39,9 +39,9 @@
    function fromCc() {
    var text = document.getElementById("cc").value;
    if (text == "") {
-     document.getElementById("lpm).value = "";
+     document.getElementById("lpm").value = "";
    } else {
-     document.getElementById("lpm").value = clean(parseFlost(text) / 1000);
+     document.getElementById("lpm").value = clean(parseFloat(text) / 1000);
    }
   }
   //LPM to cc/min
