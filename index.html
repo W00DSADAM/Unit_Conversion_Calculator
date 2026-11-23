@@ -25,6 +25,11 @@
     <p><input id="degf" type="number" oninput="fromF()"> °F</p>
     <h2>Wind Direction</h2>
     <p><input id="deg" type="number" oninput="fromDeg()"> degrees = <span id="compass"></span></p>
+    <h2>Actual / Standard Flow (EPA: 25 °C, 760 mmHg)</h2>
+    <p><input id="flowT" type="number" oninput="fromAlpm()"> °C ambient temperature</p>
+    <p><input id="flowP" type="number" oninput="fromAlpm()"> mmHg ambient pressure</p>
+    <p><input id="alpm" type="number" oninput="fromAlpm()"> LPM (actual)</p>
+    <p><input id="slpm" type="number" oninput="fromSlpm()"> SLPM (standard)</p>
  <script>
    // How many mbar are in 1 of each unit
    var mbarPer = {
@@ -145,7 +150,37 @@
        }
      }
    }
-         
+  // EPA standard conditions (40 CFR 50.3)
+   var STD_T = 298.15;   // 25 °C in Kelvin
+   var STD_P = 760;      // mmHg
+
+   // Actual LPM to standard SLPM
+   function fromAlpm() {
+     var t = document.getElementById("flowT").value;
+     var p = document.getElementById("flowP").value;
+     var q = document.getElementById("alpm").value;
+     if (t == "" || p == "" || q == "") {
+       document.getElementById("slpm").value = "";
+     } else {
+       var tK = parseFloat(t) + 273.15;
+       var slpm = parseFloat(q) * (parseFloat(p) / STD_P) * (STD_T / tK);
+       document.getElementById("slpm").value = clean(slpm);
+     }
+   }
+
+   // Standard SLPM to actual LPM
+   function fromSlpm() {
+     var t = document.getElementById("flowT").value;
+     var p = document.getElementById("flowP").value;
+     var q = document.getElementById("slpm").value;
+     if (t == "" || p == "" || q == "") {
+       document.getElementById("alpm").value = "";
+     } else {
+       var tK = parseFloat(t) + 273.15;
+       var alpm = parseFloat(q) * (STD_P / parseFloat(p)) * (tK / STD_T);
+       document.getElementById("alpm").value = clean(alpm);
+     }
+   }       
 </script>
 </body>
 </html>
