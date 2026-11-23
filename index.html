@@ -26,8 +26,8 @@
     <h2>Wind Direction</h2>
     <p><input id="deg" type="number" oninput="fromDeg()"> degrees = <span id="compass"></span></p>
     <h2>Actual / Standard Flow (EPA: 25 °C, 760 mmHg)</h2>
-    <p><input id="flowT" type="number" oninput="fromAlpm()"> °C ambient temperature</p>
-    <p><input id="flowP" type="number" oninput="fromAlpm()"> mmHg ambient pressure</p>
+    <p><input id="flowT" type="number" oninput="recalcFlow()"> °C ambient temperature</p>
+    <p><input id="flowP" type="number" oninput="recalcFlow()"> mmHg ambient pressure</p>
     <p><input id="alpm" type="number" oninput="fromAlpm()"> LPM (actual)</p>
     <p><input id="slpm" type="number" oninput="fromSlpm()"> SLPM (standard)</p>
  <script>
@@ -153,9 +153,20 @@
   // EPA standard conditions (40 CFR 50.3)
    var STD_T = 298.15;   // 25 °C in Kelvin
    var STD_P = 760;      // mmHg
+   // Remembers which flow box you typed in last
+   var lastFlow = "alpm";
+   // When temperature or pressure changes, redo whichever direction you used last
+   function recalcFlow() {
+     if (lastFlow == "alpm") {
+       fromAlpm();
+     } else {
+       fromSlpm();
+     }
+   }
 
    // Actual LPM to standard SLPM
    function fromAlpm() {
+     lastFlow = "alpm";
      var t = document.getElementById("flowT").value;
      var p = document.getElementById("flowP").value;
      var q = document.getElementById("alpm").value;
@@ -170,6 +181,7 @@
 
    // Standard SLPM to actual LPM
    function fromSlpm() {
+     lastFlow = "slpm";
      var t = document.getElementById("flowT").value;
      var p = document.getElementById("flowP").value;
      var q = document.getElementById("slpm").value;
