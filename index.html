@@ -2,34 +2,98 @@
   <html>
   <head>
   <title>Unit Conversion Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Barlow", Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222222;
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 16px;
+    }
+    h1 {
+      color: #1a4d7a;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit), minmax(280px, 1fr);
+      gap: 16px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 16px 20px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 20px;
+      color: #1a4d7a;
+    }
+    .note {
+      font-size: 14px;
+      color: #667085;
+    }
+    input {
+      font-size: 16px;
+      padding: 6px;
+      width: 120px;
+      border: 1px solid #b0b8c0;
+      border-radius: 6px;
+    }
+    #compass {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1a4d7a;
+    }
+    </style>
   </head>
   <body>
     <h1>Unit Conversion Calculator</h1>
+    <div class="grid">
+
+      <div class="card">
     <h2>Solar Radiation </h2>
     <p><input id="kw" type="number" oninput="fromKw()"> kW/m2</p>
     <p><input id="w" type="number" oninput="fromW()"> W/m2</p>
+      </div>
+      <div class="card">
     <h2>Flow</h2>
     <p><input id="cc" type="number" oninput="fromCc()"> cc/min</p>
     <p><input id="lpm" type="number" oninput="fromLpm()"> LPM</p>
+      </div>
+      <div class="card">
     <h2>Pressure</h2>
     <p><input id="mmhg" type="number" oninput="fromPressure('mmhg')"> mmHg</p>
     <p><input id="mbar" type="number" oninput="fromPressure('mbar')"> mbar</p>
     <p><input id="psia" type="number" oninput="fromPressure('psia')"> psia</p>
+      </div>
+      <div class="card">
     <h2>Wind Speed</h2>
     <p><input id="ms" type="number" oninput="fromWind('ms')"> m/s</p>
     <p><input id="mph" type="number" oninput="fromWind('mph')"> mph</p>
     <p><input id="knots" type="number" oninput="fromWind('knots')"> knots</p>
     <p><input id="kmh" type="number" oninput="fromWind('kmh')"> km/h</p>
+      </div>
+      <div class="card">
     <h2>Temperature</h2>
     <p><input id="degc" type="number" oninput="fromC()"> °C</p>
     <p><input id="degf" type="number" oninput="fromF()"> °F</p>
+      </div>
+      <div class="card">
     <h2>Wind Direction</h2>
     <p><input id="deg" type="number" oninput="fromDeg()"> degrees = <span id="compass"></span></p>
+      </div>
+      <div class="card">
     <h2>Actual / Standard Flow (EPA: 25 °C, 760 mmHg)</h2>
     <p><input id="flowT" type="number" oninput="recalcFlow()"> °C ambient temperature</p>
     <p><input id="flowP" type="number" oninput="recalcFlow()"> mmHg ambient pressure</p>
     <p><input id="alpm" type="number" oninput="fromAlpm()"> LPM (actual)</p>
     <p><input id="slpm" type="number" oninput="fromSlpm()"> SLPM (standard)</p>
+      </div>
+    </div>
  <script>
    // How many mbar are in 1 of each unit
    var mbarPer = {
