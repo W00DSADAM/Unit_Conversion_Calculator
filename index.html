@@ -92,7 +92,7 @@
    //Convert any wind speed box to all the others
    function fromWind(unit) {
      var text = document.getElementById(unit).value;
-     for (var other in msPer)
+     for (var other in msPer) {
        if (other != unit) {
          if (text == "") {
            document.getElementById(other).value = "";
