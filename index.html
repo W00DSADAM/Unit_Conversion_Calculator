@@ -11,7 +11,31 @@
     <h2>Flow</h2>
     <p><input id="cc" type="number" oninput="fromCc()"> cc/min</p>
     <p><input id="lpm" type="number" oninput="fromLpm()"> LPM</p>
+    <h2>Pressure</h2>
+    <p><input id="mmhg" type="number" oninput="fromPressure('mmhg')"> mmHg</p>
+    <p><input id="mbar" type="number" oninput="fromPressure('mbar')"> mbar</p>
+    <p><input id="psia" type="number" oninput="fromPressure('psia')"> psia</p>
  <script>
+   // How many mbar are in 1 of each unit
+   var mbarPer = {
+     mmhg: 1013.25 / 760,
+     mbar: 1,
+     psia: 68.94757293
+   };
+   //Convert any pressure box to all the others
+   function fromPressure(unit) {
+     var text = document.getElementById(unit).value;
+     for (var other in mbarPer) {
+       if (other != unit) {
+         if (text == "") {
+           document.getElementById(other).value = "";
+         } else {
+           var mbar = parseFloat(text) *mbarPer[unit];
+           document.getElementById(other).value = clean(mbar / mbarPer[other]);
+         }
+       }
+     }
+   }   
    // Clean up tiny computer math errors (keeps up to 6 decimals)
    function clean(n) {
      return parseFloat(n.toFixed(6));
@@ -29,7 +53,7 @@
   // W/m2 to KW/m2
   function fromW() {
     var text = document.getElementById("w").value;
-    if (text = "") {
+    if (text == "") {
       document.getElementById("kw").value = "";
     } else {
         document.getElementById("kw").value = clean(parseFloat(text) / 1000);
