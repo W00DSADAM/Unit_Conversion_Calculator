@@ -20,6 +20,9 @@
     <p><input id="mph" type="number" oninput="fromWind('mph')"> mph</p>
     <p><input id="knots" type="number" oninput="fromWind('knots')"> knots</p>
     <p><input id="kmh" type="number" oninput="fromWind('kmh')"> km/h</p>
+    <h2>Temperature</h2>
+    <p><input id="degc" type="number" oninput="fromC()"> °C</p>
+    <p><input id="degf" type="number" oninput="fromF()"> °F</p>
  <script>
    // How many mbar are in 1 of each unit
    var mbarPer = {
@@ -101,6 +104,24 @@
            document.getElementById(other).value = clean(ms / msPer[other]);
          }
        }
+     }
+   }
+   // °C to °F
+   function fromC() {
+     var text = document.getElementById("degc").value;
+     if (text == "") {
+       document.getElementById("degf").value = "";
+     } else {
+       document.getElementById("degf").value = clean(parseFloat(text) * 9 / 5 + 32);
+     }  
+   }
+   // °F to °C
+   function fromF() {
+     var text = document.getElementById("degf").value;
+     if (text == "") {
+       document.getElementById("degc").value = "";
+     } else {
+       document.getElementById("degc").value = clean((parseFloat(text) - 32) * 5 / 9);
      }
    }
 </script>
