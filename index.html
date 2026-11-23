@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+  <title>Unit Conversion Calculator</title>
+  </head>
+  <body>
+    <h1>Unit Conversion Calculator</h1>
+    <h2>Solar Radiation </h2>
+    <p><input id="kw" type="number" oninput="fromKw()"> kW/m2</p>
+    <p><input id="w" type="number" oninput="fromW()"> W/m2</p>
+ <script>
+  // kW/m2 to W/m2
+  function fromKw() {
+     var text = document.getElementById("kw").value;
+     if (text == "") {
+      document.getElementById("w").value = "";
+     } else {
+       document.getElementById("w").value = parseFloat(text) * 1000;
+     }
+  }
+
+  // W/m2 to KW/m2
+  function fromW() {
+    var text = document.getElementById("w").value;
+    if (text = "") {
+      document.getElementById("kw").value == "";
+    } else {
+        document.getElementById("kw").value = parseFloat(text) / 1000;
+    }
+  }
+</script>
+</body>
+</html>
